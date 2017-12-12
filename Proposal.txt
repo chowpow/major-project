@@ -1,0 +1,20 @@
+Major Project proposal
+Shao & Sameer 
+
+Project Idea: Jetpack Joyride styled platform game
+Nessasary: 
+	-Collision detection between ground and charcter
+	-Detection between charcter and obstacles/enemies
+	-Working bullets
+	-Being able to collect coins 
+	-Smooth movement and graphics
+	-Gravity
+	-Random obstacles/enemies
+	
+Nice to have:
+	-Working shop for upgrades
+	-Sounds 
+	-Pause/Resume 
+	-Menu and transition screens
+	-Saving highscores
+	
