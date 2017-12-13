@@ -1,18 +1,23 @@
 Major Project proposal
 Shao & Sameer 
 
-Project Idea: Jetpack Joyride styled platform game
+Project Idea: Megaman styled platform game
 Nessasary: 
-	-Collision detection between ground and charcter
-	-Detection between charcter and obstacles/enemies
-	-Working bullets
-	-Being able to collect coins 
+	-Collision detection between platforms and characters
+	-Detection between characters and obstacles/enemies
+	-Working bullets 
+	-Being able to collect health
+	-Player movement 
+	-Different levels
+	-Player orientation based on movement
+	-Background movement
 	-Smooth movement and graphics
-	-Gravity
 	-Random obstacles/enemies
 	
 Nice to have:
-	-Working shop for upgrades
+	-Smart enemies
+	-Health bar
+	-Death animation
 	-Sounds 
 	-Pause/Resume 
 	-Menu and transition screens
