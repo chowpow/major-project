@@ -30,7 +30,7 @@ String creater = "By Shao & Sameera";
 String start = "Play";
 
 // Paddle Variables
-int radius = 90;
+int radius = 45;
 
 // Puck Variables 
 int puckX;
@@ -92,8 +92,8 @@ void setup()
   puck = new Puck(width/2, height/2, paddles);
 
   // Create 2 paddles
-  p1 = new paddle(0, height/2, radius);
-  p2 = new paddle(player2MoveX, player2MoveY, radius);
+  p1 = new paddle(0, height/2, radius * 2);
+  p2 = new paddle(player2MoveX, player2MoveY, radius * 2);
 
   net1 = new Nets(0, height/2, 50, 200);
   net2 = new Nets(width, height/2, 50, 200);
@@ -101,7 +101,7 @@ void setup()
   // Add them to an array
   paddles.add(p1);
   paddles.add(p2);
-  
+
   box = new Powerup(200, height /2, 50);
 
   // Sort font
@@ -121,7 +121,7 @@ void setup()
 }
 
 void draw() {  
-  
+
   noCursor();
   if (menu)
   {
@@ -140,7 +140,7 @@ void draw() {
   }
 }
 void move() {
-  
+
   //moves player 2, up, down, right, or left, and constrains the x value only to the right half
   if (movingUp == true) {
     player2MoveY -= DY;
@@ -149,26 +149,26 @@ void move() {
       player2MoveY = radius/2;
     }
   }
-  
+
   if (movingDown == true) {
     player2MoveY += DY;
-    if (player2MoveY>height-(radius/2))
+    if (player2MoveY>height-(radius))
     {
-      player2MoveY = height-(radius/2);
+      player2MoveY = height-(radius);
     }
   }
-  
+
   if (movingLeft == true) {
     player2MoveX -= DX;
-    if (player2MoveX<width/2+(radius/2))
+    if (player2MoveX<width/2+(radius))
     {
-      player2MoveX = width/2+(radius/2);
+      player2MoveX = width/2+(radius);
     }
   }
-  
+
   if (movingRight == true) {
     player2MoveX += DX;
-    if (player2MoveX>width-(radius/2))
+    if (player2MoveX>width-(radius))
     {
       player2MoveX = width-(radius/2);
     }
@@ -210,11 +210,11 @@ void keyReleased() {
 
 void drawPitch() {
   background(bg);//floor
-  
+
   stroke(0);
   strokeWeight(3);
   noFill();
-  
+
   //lines on the court
   ellipse(0, 300, 400, 400);
   ellipse(width-25, 300, 400, 400);
@@ -226,7 +226,7 @@ void drawPitch() {
 
 //Menu screen
 void menuSetup() {
-  
+
   background(menuBg);//menu wallpaper
 
   // checks if the cursor is on the Play Button
@@ -279,7 +279,7 @@ void drawGoals() {
   textAlign(CENTER);
   textSize(30);
   fill(0);
-  
+
   //scoreboard
   int score1 = puck.score1();
   text("Player 1\n"+score1, width/4, 50); 
@@ -296,16 +296,14 @@ void gamePlaySetup() {
   // paddle movement
   p1.move(mouseX, mouseY);
   p2.move(player2MoveX, player2MoveY); 
-  
-  p1.powerUpDetection(box);
 
   // constrain the paddles at half
-  if (p1.x>width/2-(radius/2)) { 
-    p1.x=width/2-(radius/2);
+  if (p1.x>width/2-(radius)) { 
+    p1.x=width/2-(radius);
   }
 
-  if (p2.x<width/2-(radius/2)) { 
-    p2.x=width/2-(radius/2);
+  if (p2.x<width/2-(radius)) { 
+    p2.x=width/2-(radius);
   }
 
   // draw Puck
@@ -318,9 +316,11 @@ void gamePlaySetup() {
   drawGoals();
   int score1 = puck.score1();
   int score2 = puck.score2();
-  
+
   // draw test square
+  p1.boxCollision(box);
   box.display();
+
 
   if (score1 == 5 || score2 == 5) {   
     // if either scores reaches 5 then show menu screen
@@ -329,20 +329,18 @@ void gamePlaySetup() {
       title="PLAYER 1 WINS";
       creater="";
       start="Again?";
-      
+
       //resets scores
       puck.score1 = 0;
       puck.score2 = 0;
       menu = true;
       imageMode(CORNER);
-    } 
-    
-    else {
+    } else {
       // text if player 2 wins
       title="PLAYER 2 WINS";
       creater="";
       start="Again?";
-      
+
       //resets scores
       puck.score1 = 0;
       puck.score2 = 0;

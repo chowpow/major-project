@@ -1,19 +1,19 @@
 class Powerup {
   // data
-  int x, y, w;
-  color boxColor = color(255, 0, 0);
+  int rx, ry, rw;
+  color boxColor = color(0, 0, 0);
   
   // constructor
-  Powerup(int _x, int _y, int _w) {
-    x = _x;
-    y = _y;
-    w = _w;
+  Powerup(int _rx, int _ry, int _rw) {
+    rx = _rx;
+    ry = _ry;
+    rw = _rw;
   }
   
   void display() {
     fill(boxColor);
     stroke(0);
     strokeWeight(2);
-    rect(x, y, w, w);
+    rect(rx, ry, rw, rw);
   }    
 }

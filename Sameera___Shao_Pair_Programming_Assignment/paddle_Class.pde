@@ -19,7 +19,7 @@ class paddle {
     stroke(0);
     strokeWeight(2);
     ellipse(x, y, r, r);
-    println(x, y);
+    println(r);
   }
 
   void move(int _moveX, int _moveY) {
@@ -41,26 +41,36 @@ class paddle {
     }
   }
 
-  void powerUpDetection(Powerup box) {
+  boolean circleRect(float cx, float cy, float radius, float rx, float ry, float rw) {
+
     // temporary variables to set edges for testing
-    float testX = x;
-    float testY = y;
+    float testX = cx;
+    float testY = cy;
 
     // which edge is closest?
-    if (x < box.x)         testX = box.x;      // test left edge
-    else if (x > box.x+box.w) testX = box.x+box.w;   // right edge
-    if (box.y < box.y)         testY = box.y;      // top edge
-    else if (box.y > box.y+box.w) testY = box.y+box.w;   // bottom edge
+    if (cx < rx)         testX = rx;      // test left edge
+    else if (cx > rx+rw) testX = rx+rw;   // right edge
+    if (cy < ry)         testY = ry;      // top edge
+    else if (cy > ry+rw) testY = ry+rw;   // bottom edge
 
     // get distance from closest edges
-    float distX = x-testX;
-    float distY = y-testY;
+    float distX = cx-testX;
+    float distY = cy-testY;
     float distance = sqrt( (distX*distX) + (distY*distY) );
 
     // if the distance is less than the radius, collision!
     if (distance <= radius) {
-      box.boxColor = color(0);
+      return true;
     }
-   
+    return false;
+  }
+  
+  void boxCollision(Powerup blackBox) {
+    boolean hit = circleRect(x,y,r,blackBox.rx,blackBox.ry,blackBox.rw);
+    if (hit) {
+      blackBox.boxColor = color(255, 0, 0);
+    } else {
+      blackBox.boxColor = color(0);
+    }
   }
 }
