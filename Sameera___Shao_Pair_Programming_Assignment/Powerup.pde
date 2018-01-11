@@ -1,6 +1,7 @@
 class Powerup {
   // data
   int x, y, w;
+  color boxColor = color(255, 0, 0);
   
   // constructor
   Powerup(int _x, int _y, int _w) {
@@ -10,7 +11,7 @@ class Powerup {
   }
   
   void display() {
-    fill(0, 0, 0, 55);
+    fill(boxColor);
     stroke(0);
     strokeWeight(2);
     rect(x, y, w, w);

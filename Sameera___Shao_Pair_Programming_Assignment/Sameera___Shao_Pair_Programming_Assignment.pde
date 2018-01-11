@@ -296,6 +296,8 @@ void gamePlaySetup() {
   // paddle movement
   p1.move(mouseX, mouseY);
   p2.move(player2MoveX, player2MoveY); 
+  
+  p1.powerUpDetection(box);
 
   // constrain the paddles at half
   if (p1.x>width/2-(radius/2)) { 
