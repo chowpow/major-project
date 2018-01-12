@@ -92,8 +92,8 @@ void setup()
   puck = new Puck(width/2, height/2, paddles);
 
   // Create 2 paddles
-  p1 = new paddle(0, height/2, radius * 2);
-  p2 = new paddle(player2MoveX, player2MoveY, radius * 2);
+  p1 = new paddle(0, height/2, radius);
+  p2 = new paddle(player2MoveX, player2MoveY, radius);
 
   net1 = new Nets(0, height/2, 50, 200);
   net2 = new Nets(width, height/2, 50, 200);
@@ -168,9 +168,9 @@ void move() {
 
   if (movingRight == true) {
     player2MoveX += DX;
-    if (player2MoveX>width-(radius))
+    if (player2MoveX>width/2-(radius))
     {
-      player2MoveX = width-(radius/2);
+      player2MoveX = width-(radius);
     }
   }
 }

@@ -18,7 +18,8 @@ class paddle {
     fill(255);
     stroke(0);
     strokeWeight(2);
-    ellipse(x, y, r, r);
+    ellipse(x, y, r*2, r*2);
+   
     println(r);
   }
 
@@ -28,16 +29,16 @@ class paddle {
     y = _moveY;
 
     // keeps the paddle in bounds
-    if (x + r> width) {   
-      x = width - r/2;
-    } else if (x - r/2 < 0) { 
-      x = r/2;
+    if (x + r*2> width) {   
+      x = width - r;
+    } else if (x - r < 0) { 
+      x = r;
     }
 
-    if (y + r/2 > height) {
-      y = height - r/2;
-    } else if (y - r/2 < 0) {
-      y = r/2;
+    if (y + r > height) {
+      y = height - r;
+    } else if (y - r < 0) {
+      y = r;
     }
   }
 
