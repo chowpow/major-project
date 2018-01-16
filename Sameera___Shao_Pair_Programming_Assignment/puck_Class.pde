@@ -38,7 +38,7 @@ class Puck {
       float dx = paddles.get(i).x - puckX; //paddles x co-ords to be changed
       float dy = paddles.get(i).y - puckY;  //paddles y co-ords to be changed
       float distance = sqrt(dx*dx + dy*dy);//distance between the two objects
-      float minDist = (p1.r/2) + (p1.r/2);
+      float minDist = (p1.r) + (p1.r);
 
       // If our paddles hit the puck
       if (distance < minDist) {

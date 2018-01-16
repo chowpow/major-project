@@ -102,6 +102,7 @@ void setup()
   paddles.add(p1);
   paddles.add(p2);
 
+  // 
   box = new Powerup(200, height /2, 50);
 
   // Sort font
