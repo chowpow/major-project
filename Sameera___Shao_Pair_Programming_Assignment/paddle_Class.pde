@@ -1,6 +1,6 @@
 class paddle {
   // class for the player paddles
-
+  
   // data
   int x, y, r, r2;
 
@@ -29,6 +29,7 @@ class paddle {
     y = _moveY;
 
     // keeps the paddle in bounds
+<<<<<<< HEAD
     if (x + r*2> width) {   
       x = width - r;
     } else if (x - r < 0) { 
@@ -73,5 +74,34 @@ class paddle {
     } else {
       blackBox.boxColor = color(0);
     }
+=======
+    if (x + r> width)  {   
+      x = width - r/2;
+    } 
+    else if (x - r/2 < 0) { 
+      x = r/2;
+    }
+
+    if (y + r/2 > height) {
+      y = height - r/2;
+    } 
+    else if (y - r/2 < 0) {
+      y = r/2;
+    }
+  }
+  
+  void powerUpDetection(Powerup box, float x, float y, float r, float sx, float sy, float sw) {
+    sx = box.x;
+    sy = box.y;
+    sw = box.w;
+    
+    float testX = x;
+    float testY = y;
+    
+    if (x < sx) textX = 
+    
+    
+    
+>>>>>>> parent of 7830eb1... Attempted Collision Detection
   }
 }
