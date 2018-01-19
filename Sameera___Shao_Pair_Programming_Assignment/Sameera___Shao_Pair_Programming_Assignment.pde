@@ -1,22 +1,9 @@
-//Sameera Rathnayake
-//Shaochen Ma
-//Pair Programming assignment -- Air Basketball
-
-//Mr.Schellenberg
-//Computer Science 30
-//December 5, 2017
-
-//Shao - paddle class, and net Class
-//Sameera- draw loop, puck class
-//Sameera + Shao = commenting
-
 ArrayList<paddle> paddles = new ArrayList();
 
 // Class Types
 Puck puck;
 paddle p1, p2;
 Nets net1, net2;
-Powerup box;
 
 // Booleans
 boolean paused = false;
@@ -30,7 +17,7 @@ String creater = "By Shao & Sameera";
 String start = "Play";
 
 // Paddle Variables
-int radius = 45;
+int radius = 90;
 
 // Puck Variables 
 int puckX;
@@ -101,9 +88,8 @@ void setup()
   // Add them to an array
   paddles.add(p1);
   paddles.add(p2);
-
-  // 
-  box = new Powerup(200, height /2, 50);
+  
+ 
 
   // Sort font
   scoreBoard = loadFont("OCRAStd-48.vlw");
@@ -122,7 +108,7 @@ void setup()
 }
 
 void draw() {  
-
+  
   noCursor();
   if (menu)
   {
@@ -141,7 +127,7 @@ void draw() {
   }
 }
 void move() {
-
+  
   //moves player 2, up, down, right, or left, and constrains the x value only to the right half
   if (movingUp == true) {
     player2MoveY -= DY;
@@ -150,28 +136,28 @@ void move() {
       player2MoveY = radius/2;
     }
   }
-
+  
   if (movingDown == true) {
     player2MoveY += DY;
-    if (player2MoveY>height-(radius))
+    if (player2MoveY>height-(radius/2))
     {
-      player2MoveY = height-(radius);
+      player2MoveY = height-(radius/2);
     }
   }
-
+  
   if (movingLeft == true) {
     player2MoveX -= DX;
-    if (player2MoveX<width/2+(radius))
+    if (player2MoveX<width/2+(radius/2))
     {
-      player2MoveX = width/2+(radius);
+      player2MoveX = width/2+(radius/2);
     }
   }
-
+  
   if (movingRight == true) {
     player2MoveX += DX;
-    if (player2MoveX>width/2-(radius))
+    if (player2MoveX>width-(radius/2))
     {
-      player2MoveX = width-(radius);
+      player2MoveX = width-(radius/2);
     }
   }
 }
@@ -211,11 +197,11 @@ void keyReleased() {
 
 void drawPitch() {
   background(bg);//floor
-
+  
   stroke(0);
   strokeWeight(3);
   noFill();
-
+  
   //lines on the court
   ellipse(0, 300, 400, 400);
   ellipse(width-25, 300, 400, 400);
@@ -227,7 +213,7 @@ void drawPitch() {
 
 //Menu screen
 void menuSetup() {
-
+  
   background(menuBg);//menu wallpaper
 
   // checks if the cursor is on the Play Button
@@ -280,7 +266,7 @@ void drawGoals() {
   textAlign(CENTER);
   textSize(30);
   fill(0);
-
+  
   //scoreboard
   int score1 = puck.score1();
   text("Player 1\n"+score1, width/4, 50); 
@@ -292,19 +278,21 @@ void gamePlaySetup() {
   // draws the pitch and displays the paddles
   drawPitch();
   p1.display(); 
+  p1.special(puck, '1', '2', '3');
   p2.display();   
+  p2.special(puck, 'r', 't', 'y');
 
   // paddle movement
   p1.move(mouseX, mouseY);
   p2.move(player2MoveX, player2MoveY); 
 
   // constrain the paddles at half
-  if (p1.x>width/2-(radius)) { 
-    p1.x=width/2-(radius);
+  if (p1.x>width/2-(radius/2)) { 
+    p1.x=width/2-(radius/2);
   }
 
-  if (p2.x<width/2-(radius)) { 
-    p2.x=width/2-(radius);
+  if (p2.x<width/2-(radius/2)) { 
+    p2.x=width/2-(radius/2);
   }
 
   // draw Puck
@@ -317,34 +305,35 @@ void gamePlaySetup() {
   drawGoals();
   int score1 = puck.score1();
   int score2 = puck.score2();
-
-  // draw test square
-  p1.boxCollision(box);
-  box.display();
+  
 
 
-  if (score1 == 5 || score2 == 5) {   
+  if (score1 == 10 || score2 == 10) {   
     // if either scores reaches 5 then show menu screen
     if (score1>score2) {
       // text if player 1 wins 
       title="PLAYER 1 WINS";
       creater="";
       start="Again?";
-
+      
       //resets scores
       puck.score1 = 0;
       puck.score2 = 0;
+      puck.ballRadius = puck.ballImage.width * 0.05 /2;
       menu = true;
       imageMode(CORNER);
-    } else {
+    } 
+    
+    else {
       // text if player 2 wins
       title="PLAYER 2 WINS";
       creater="";
       start="Again?";
-
+      
       //resets scores
       puck.score1 = 0;
       puck.score2 = 0;
+      puck.ballRadius = puck.ballImage.width * 0.05 /2;
       menu = true;
       imageMode(CORNER);
     }

@@ -4,7 +4,7 @@ class Puck {
   ArrayList<paddle> paddles;  
   PImage ballImage;
   int x, y; 
-  float spring = 0.08;  
+  float spring = 0.05;  
   float friction = -0.7;
   int vy = 0, vx = 0;
   
@@ -20,7 +20,7 @@ class Puck {
     ballImage = loadImage("will.png");//loads the soccer ball
     puckX = _x; //x cord
     puckY = _y; // y cord
-    ballRadius = (ballImage.width * 0.05) / 2; //scaling down
+    ballRadius = (ballImage.width * 0.02) / 2; //scaling down
     paddles = _paddles; //renaming the array list
   }
 
@@ -33,16 +33,17 @@ class Puck {
   }
 
   void hit(Nets gameNet) {
+    
     for (int i = 0; i < paddles.size(); i++) {
       // collision detection between the paddles and the puck
       float dx = paddles.get(i).x - puckX; //paddles x co-ords to be changed
       float dy = paddles.get(i).y - puckY;  //paddles y co-ords to be changed
       float distance = sqrt(dx*dx + dy*dy);//distance between the two objects
-      float minDist = (p1.r) + (p1.r);
+      float minDist = (p1.r/2) + (ballRadius);
 
       // If our paddles hit the puck
       if (distance < minDist) {
-        //determines the angle of the puch rebound. 
+        //determines the angle of the puck rebound. 
         float angle = atan2(dy, dx);
         float targetX = puckX + cos(angle) * (minDist);
         float targetY = puckY + sin(angle) * (minDist);
