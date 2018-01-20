@@ -18,6 +18,7 @@ String start = "Play";
 
 // Paddle Variables
 int radius = 90;
+int powerUpAvailableP1, powerUpAvailableP2;
 
 // Puck Variables 
 int puckX;
@@ -27,8 +28,6 @@ int goalTop, goalBottom, goalLeft, goalRight, goalWidth, goalHeight;
 
 //background images
 PImage floorm, menuBg;
-
-float BX, BY;
 
 //font 
 PFont scoreBoard;
@@ -79,7 +78,7 @@ void setup()
   puck = new Puck(width/2, height/2, paddles);
 
   // Create 2 paddles
-  p1 = new paddle(0, height/2, radius);
+  p1 = new paddle((width / 2) - radius, height/2, radius);
   p2 = new paddle(player2MoveX, player2MoveY, radius);
 
   net1 = new Nets(0, height/2, 50, 200);
@@ -88,8 +87,6 @@ void setup()
   // Add them to an array
   paddles.add(p1);
   paddles.add(p2);
-  
- 
 
   // Sort font
   scoreBoard = loadFont("OCRAStd-48.vlw");
@@ -105,10 +102,14 @@ void setup()
   lebron = loadImage("lebron.png");
   basket = createFont("basket.ttf", 70);
   halo = createFont("halo.ttf", 55);
+  
+  // player powerup 
+  int powerUpAvailableP1 = p1.powerUpPoint1;
+  int powerUpAvailableP2 = p2.powerUpPoint2;
 }
 
 void draw() {  
-  
+
   noCursor();
   if (menu)
   {
@@ -127,7 +128,7 @@ void draw() {
   }
 }
 void move() {
-  
+
   //moves player 2, up, down, right, or left, and constrains the x value only to the right half
   if (movingUp == true) {
     player2MoveY -= DY;
@@ -136,7 +137,7 @@ void move() {
       player2MoveY = radius/2;
     }
   }
-  
+
   if (movingDown == true) {
     player2MoveY += DY;
     if (player2MoveY>height-(radius/2))
@@ -144,7 +145,7 @@ void move() {
       player2MoveY = height-(radius/2);
     }
   }
-  
+
   if (movingLeft == true) {
     player2MoveX -= DX;
     if (player2MoveX<width/2+(radius/2))
@@ -152,7 +153,7 @@ void move() {
       player2MoveX = width/2+(radius/2);
     }
   }
-  
+
   if (movingRight == true) {
     player2MoveX += DX;
     if (player2MoveX>width-(radius/2))
@@ -197,11 +198,11 @@ void keyReleased() {
 
 void drawPitch() {
   background(bg);//floor
-  
+
   stroke(0);
   strokeWeight(3);
   noFill();
-  
+
   //lines on the court
   ellipse(0, 300, 400, 400);
   ellipse(width-25, 300, 400, 400);
@@ -213,7 +214,7 @@ void drawPitch() {
 
 //Menu screen
 void menuSetup() {
-  
+
   background(menuBg);//menu wallpaper
 
   // checks if the cursor is on the Play Button
@@ -264,23 +265,23 @@ void drawGoals() {
 
   // scoreboard 
   textAlign(CENTER);
-  textSize(30);
+  textSize(20);
   fill(0);
-  
+
   //scoreboard
   int score1 = puck.score1();
-  text("Player 1\n"+score1, width/4, 50); 
+  text("Player 1\n"+score1 + "\n Power up available:" +powerUpAvailableP1, width/4, 50); 
   int score2 = puck.score2();
-  text("Player 2\n"+score2, width*.75, 50);
+  text("Player 2\n"+score2 + "\n Power up available:" +powerUpAvailableP2, width*.75, 50);
 }
 
 void gamePlaySetup() {
-  // draws the pitch and displays the paddles
+  // draws the pitch, displays the paddles and sets up the special moves function
   drawPitch();
   p1.display(); 
-  p1.special(puck, '1', '2', '3');
+  p1.specialP1(puck, '1', '2', '3', '4');
   p2.display();   
-  p2.special(puck, 'r', 't', 'y');
+  //p2.special(puck, 'r', 't', 'y', 'u');
 
   // paddle movement
   p1.move(mouseX, mouseY);
@@ -306,30 +307,26 @@ void gamePlaySetup() {
   int score1 = puck.score1();
   int score2 = puck.score2();
   
-
-
   if (score1 == 10 || score2 == 10) {   
-    // if either scores reaches 5 then show menu screen
+    // if either scores reaches 10 then show menu screen
     if (score1>score2) {
       // text if player 1 wins 
       title="PLAYER 1 WINS";
       creater="";
       start="Again?";
-      
+
       //resets scores
       puck.score1 = 0;
       puck.score2 = 0;
       puck.ballRadius = puck.ballImage.width * 0.05 /2;
       menu = true;
       imageMode(CORNER);
-    } 
-    
-    else {
+    } else {
       // text if player 2 wins
       title="PLAYER 2 WINS";
       creater="";
       start="Again?";
-      
+
       //resets scores
       puck.score1 = 0;
       puck.score2 = 0;

@@ -1,5 +1,5 @@
 class Puck {
-  
+
   // data
   ArrayList<paddle> paddles;  
   PImage ballImage;
@@ -7,7 +7,7 @@ class Puck {
   float spring = 0.05;  
   float friction = -0.7;
   int vy = 0, vx = 0;
-  
+
   int score1 = 0;
   int score2 = 0;
   boolean goal = false;
@@ -20,7 +20,7 @@ class Puck {
     ballImage = loadImage("will.png");//loads the soccer ball
     puckX = _x; //x cord
     puckY = _y; // y cord
-    ballRadius = (ballImage.width * 0.02) / 2; //scaling down
+    ballRadius = (ballImage.width * 0.05) / 2; //scaling down
     paddles = _paddles; //renaming the array list
   }
 
@@ -33,13 +33,13 @@ class Puck {
   }
 
   void hit(Nets gameNet) {
-    
+
     for (int i = 0; i < paddles.size(); i++) {
       // collision detection between the paddles and the puck
       float dx = paddles.get(i).x - puckX; //paddles x co-ords to be changed
       float dy = paddles.get(i).y - puckY;  //paddles y co-ords to be changed
       float distance = sqrt(dx*dx + dy*dy);//distance between the two objects
-      float minDist = (p1.r/2) + (ballRadius);
+      float minDist = (p1.r/2) + (ballRadius);//distance between paddle and puck
 
       // If our paddles hit the puck
       if (distance < minDist) {
@@ -47,7 +47,7 @@ class Puck {
         float angle = atan2(dy, dx);
         float targetX = puckX + cos(angle) * (minDist);
         float targetY = puckY + sin(angle) * (minDist);
-        
+
         //the speed of the puck movement
         float ax = (targetX - puckX) * spring;
         float ay = (targetY - puckY) * spring;
@@ -60,10 +60,10 @@ class Puck {
       puckY += vy;
     } 
 
-     //Ensure it doesnt go off the X axis UNLESS its a goal
+    //Ensure it doesnt go off the X axis UNLESS its a goal
     if (puckX + ballRadius > width) 
     {
-       //if the puck is not between the nets and, it hits the right side of the screen, the puck bounces, back with a slower speed
+      //if the puck is not between the nets and, it hits the right side of the screen, the puck bounces, back with a slower speed
       if ( puckY < height - (2*gameNet.netHeight) || puckY > height - gameNet.netHeight)
       {
         //slows down the puck
@@ -73,33 +73,26 @@ class Puck {
       //if the puck goes in the nets, speed becomes zero, repositions the puck to the center, a new round of game starts
       else {
         score1++;
-
-        puckX = width/2;
-        puckY = height/2;
-        vy = 0;
-        vx = 0;
+        p1.powerUpPoint1++;
+        reset();
       }
     } 
-    
+
     //checks the rebound from the left side of the screen, and if it does, rebounds with a slower spped
     else if (puckX - int(ballRadius) < 0) {
       //if the puck doensn't go in the net
       if ( puckY < height - (2* gameNet.netHeight) || puckY > height - gameNet.netHeight)
       {
-        
+
         //slows down the puck
         puckX = 0 + int(ballRadius);
         vx *= friction;
-        
-      //if the puck goes in the nets, speed becomes zero, repositions the puck to the center, a new round of game starts
-      } 
-      else{
-        score2++;
 
-        puckX = width/2;
-        puckY = height/2;
-        vy = 0;
-        vx = 0;
+        //if the puck goes in the nets, speed becomes zero, repositions the puck to the center, a new round of game starts
+      } else {
+        score2++;
+        p2.powerUpPoint2++;
+        reset();
       }
     }
 
@@ -126,5 +119,13 @@ class Puck {
   int score2()
   {
     return score2;
+  }
+
+  // resets the position of the puck
+  void reset() {
+    puckX = width/2;
+    puckY = height/2;
+    vy = 0;
+    vx = 0;
   }
 }
